@@ -1,0 +1,106 @@
+# Dependendo da forma que o docker foi instalado em todos os comandos docker adicione sudo na frente do comando 
+
+### Slide 12 ###
+# Baixando a imagem do repositório
+docker pull viniciusah/curso-ros
+
+# Dando permissão para abrir programas fora do docker
+# (substituir docker pelo nome do usuário)
+xhost +local:docker
+
+# Rodando a imagem
+docker run -it     -e DISPLAY=$DISPLAY     -v /tmp/.X11-unix:/tmp/.X11-unix viniciusah/curso-ros    
+
+# Dentro do container
+ros2 run turtlesim turtlesim_node
+
+### Slide 13 ###
+# (Em outro terminal)
+# Mostra as imagens disponíveis
+# (tem que aparecer a imagem do curso na lista)
+docker ps
+
+# Conecta em um container já existente indicado pelo APELIDO
+docker exec -it APELIDO bash
+
+# Carrega as variáveis de ambiente do ROS
+source /opt/ros/humble/setup.bash
+
+# Inicia o programa para controlar a tartaruga
+ros2 run turtlesim turtle_teleop_key
+
+### Slide 14 ###
+# (Em outro terminal)
+# Mostra as imagens disponíveis
+# (tem que aparecer a imagem do curso na lista)
+docker ps
+
+# Conecta em um container já existente indicado pelo APELIDO
+docker exec -it APELIDO bash
+
+# Carrega as variáveis de ambiente do ROS
+source /opt/ros/humble/setup.bash
+
+# Abre o programa RQT
+rqt –force-discover
+
+
+### Slide 15 ###
+# (Em outro terminal)
+# Mostra as imagens disponíveis
+# (tem que aparecer a imagem do curso na lista)
+docker ps
+
+# Conecta em um container já existente indicado pelo APELIDO
+docker exec -it APELIDO bash
+
+# Carrega as variáveis de ambiente do ROS
+source /opt/ros/humble/setup.bash
+
+# Controla a segunda tartaruga
+ros2 run turtlesim turtle_teleop_key --ros-args --remap turtle1/cmd_vel:=turtle2/cmd_vel --remap turtle1/rotate_absolute:=turtle2/rotate_absolute
+
+### Slide 16 ###
+# (Em outro terminal)
+# Mostra as imagens disponíveis
+# (tem que aparecer a imagem do curso na lista)
+docker ps
+
+# Conecta em um container já existente indicado pelo APELIDO
+docker exec -it APELIDO bash
+
+# Carrega as variáveis de ambiente do ROS
+source /opt/ros/humble/setup.bash
+
+# Listando os nós
+ros2 node list
+
+# Mais informações sobre um nó:
+ros2 node info /turtlesim
+
+# Listando os tópicos
+ros2 topic list
+
+# Lendo a informação de um nó:
+ros2 topic echo /turtle1/cmd_vel
+
+### Slide 17 ###
+
+# Mostrando qual o tipo de mensagem do tópico /turtle1/cmd_vel
+ros2 topic info /turtle1/cmd_vel
+
+# Mandando uma mensagem para o tópico
+ros2 topic pub /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+# Mandando uma mensagem uma única vez
+ros2 topic pub --once -w 2 /turtle1/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 2.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 1.8}}"
+
+### Slide 18 ###
+
+# Rodando o publisher
+cd ~
+python3 publisher.py
+
+# Rodando o subscriber
+cd ~
+python3 subscriber.py
