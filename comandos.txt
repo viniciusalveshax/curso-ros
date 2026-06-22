@@ -41,6 +41,9 @@ docker exec -it APELIDO bash
 # Carrega as variáveis de ambiente do ROS
 source /opt/ros/humble/setup.bash
 
+# Instale o módulo dos plugins do RQT
+apt install ros-humble-rqt-common-plugins
+
 # Abre o programa RQT
 rqt –force-discover
 
